@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    background-color: #4caf50;  
+    color: white;
+    padding: 15px 30px;
+}
