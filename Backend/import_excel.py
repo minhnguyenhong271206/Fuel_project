@@ -140,7 +140,7 @@ if not df_economic.empty:
 else:
     print("EconomicIndicator: Không có dữ liệu mới để import.")
 
-# ==================== ĐÓNG KẾT NỐI ====================
+
 connection.commit()
 connection.close()
 print("Hoàn thành import toàn bộ dữ liệu!")
