@@ -7,28 +7,42 @@
     <title>Fuel Market Dashboard</title>
 </head>
 <body>
+
 <nav>
-
     <div>Dashboard</div>
-
     <ul>
         <li><a href="#price">Giá</a></li>
         <li><a href="#news">Tin Tức</a></li>
         <li><a href="#report">Báo cáo</a></li>
     </ul>
-
 </nav>
 
 <main>
     <section id="price" class="active">
-        <h2>Giá nhiên liệu</h2>
-    </section>
+    <h2>Giá nhiên liệu</h2>
+    <table id="price-table">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Ngày</th>
+                <th>Giá</th>
+                <th>Đơn vị</th>
+            </tr>
+        </thead>
+        <tbody id="price-body">
+        </tbody>
+    </table>
+</section>
 
-    <section id="news" class="active">
+    <section id="news">
         <h2>Tin tức thị trường</h2>
     </section>
 
-    <section id="report" class="active">
+    <section id="report">
         <h2>Báo cáo tổng hợp</h2>
     </section>
 </main>
+
+<script src="main.js"></script> </body>
+</body>
+</html>

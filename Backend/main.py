@@ -5,7 +5,7 @@ import json
 
 app = Flask(__name__)
 CORS(app)
-
+#bien unit san pham và top 100
 @app.route('/api/price')
 def get_price():
     connection = sqlite3.connect('fuel.db')
@@ -79,6 +79,20 @@ def get_economic():
     # Gộp tên cột với data
     data = [dict(zip(columns, row)) for row in data]
 
+    connection.close()
+    return Response(
+        json.dumps(data, ensure_ascii=False),
+        mimetype='application/json'
+    )
+
+@app.route('/api/product')
+def get_product():
+    connection = sqlite3.connect('fuel.db')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM Product")
+    data = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    data = [dict(zip(columns, row)) for row in data]
     connection.close()
     return Response(
         json.dumps(data, ensure_ascii=False),
