@@ -70,6 +70,19 @@ cursor.execute("""
     )
 """)
 
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS FullNews (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date_published DATE,
+        product_type VARCHAR,
+        title VARCHAR,
+        description TEXT,
+        content TEXT,
+        url VARCHAR,
+        source VARCHAR
+    )
+""")
+
 connection.commit()
 connection.close()
 

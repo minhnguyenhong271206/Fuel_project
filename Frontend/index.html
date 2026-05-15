@@ -13,9 +13,10 @@
     <div>Dashboard</div>
     <ul>
         <li><a href="#price">Giá</a></li>
-        <li><a href="#news">Tin Tức</a></li>
+        <li><a href="#news">Giá Phân Bón </a></li>
         <li><a href="#report">Báo cáo</a></li>
         <li><a href="#margin">Margin</a></li>
+        <li><a href="#fullnews">Tin Tức</a></li>
     </ul>
 </nav>
 
@@ -88,7 +89,7 @@
 </section>
 
     <section id="news">
-        <h2>Tin tức thị trường</h2>
+        <h2>Giá Urê Thế Giới</h2>
         <table id="news-table">
             <thead>
                 <tr>
@@ -118,7 +119,30 @@
             </tbody>
         </table>
     </section>
+
+    <section id="fullnews">
+    <h2>Tin Tức Toàn Cầu</h2>
+
+    <!-- Filter -->
+    <div id="news-filter-bar">
+        <select id="news-type-filter">
+            <option value="">Tất cả</option>
+        </select>
+        <button id="news-filter-btn">Lọc</button>
+    </div>
+
+    <!-- Danh sách tin dạng card -->
+    <div id="news-list"></div>
+
+    <!-- Pagination -->
+    <div id="news-pagination">
+        <button id="news-prev">← Trước</button>
+        <span id="news-page-info">Trang 1</span>
+        <button id="news-next">Tiếp →</button>
+    </div>
+    </section>
 </main>
+
 
 <script src="main.js"></script> </body>
 </body>

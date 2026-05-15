@@ -139,5 +139,43 @@ def get_margin():
         mimetype='application/json'
     )
 
+@app.route('/api/fullnews')
+def get_fullnews():
+    product_type = request.args.get('product_type')
+    page = int(request.args.get('page', 1))
+    limit = 20
+    offset = (page - 1) * limit
+
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+
+    # Đếm tổng số tin
+    count_query = "SELECT COUNT(*) FROM FullNews"
+    count_params = []
+    if product_type:
+        count_query += " WHERE product_type = ?"
+        count_params.append(product_type)
+    cursor.execute(count_query, count_params)
+    total = cursor.fetchone()[0]
+
+    # Lấy data theo trang
+    query = "SELECT * FROM FullNews"
+    params = []
+    if product_type:
+        query += " WHERE product_type = ?"
+        params.append(product_type)
+    query += f" ORDER BY date_published DESC LIMIT {limit} OFFSET {offset}"
+
+    cursor.execute(query, params)
+    data = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    data = [dict(zip(columns, row)) for row in data]
+    connection.close()
+
+    return Response(
+        json.dumps({'data': data, 'total': total, 'page': page, 'limit': limit}, ensure_ascii=False),
+        mimetype='application/json'
+    )
+
 if __name__ == '__main__':
     app.run(debug=True)

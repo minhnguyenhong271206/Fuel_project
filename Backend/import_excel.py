@@ -157,6 +157,26 @@ df_margin = df_margin.dropna(subset=['date'])
 df_margin.to_sql('Margin', connection, if_exists='append', index=False)
 print(f"✅ Đã import {len(df_margin)} dòng vào bảng Margin!")
 
+# ==================== FULL NEWS ====================
+df_fullnews = pd.read_excel(excel_file, sheet_name='1.Tin_tuc_hang_ngay')
+
+df_fullnews = df_fullnews[['Articles_DatePublished', 'Articles_TypeProduct', 'Articles_Title', 
+                            'Articles_Description', 'Articles_Content', 'Articles_URL', 'Nguồn']].rename(columns={
+    'Articles_DatePublished' : 'date_published',
+    'Articles_TypeProduct'   : 'product_type',
+    'Articles_Title'         : 'title',
+    'Articles_Description'   : 'description',
+    'Articles_Content'       : 'content',
+    'Articles_URL'           : 'url',
+    'Nguồn'                  : 'source'
+})
+
+df_fullnews['date_published'] = pd.to_datetime(df_fullnews['date_published']).dt.date
+df_fullnews = df_fullnews.dropna(subset=['title', 'date_published'])
+
+df_fullnews.to_sql('FullNews', connection, if_exists='append', index=False)
+print(f"✅ Đã import {len(df_fullnews)} dòng vào bảng FullNews!")
+
 connection.commit()
 connection.close()
 print("Hoàn thành import toàn bộ dữ liệu!")

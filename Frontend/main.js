@@ -142,6 +142,99 @@ fetch('http://127.0.0.1:5000/api/margin')
     });
 });
 
+// Load product types cho filter
+let currentPage = 1;
+let currentType = '';
+
+function loadFullNews(page, type) {
+    let url = `http://127.0.0.1:5000/api/fullnews?page=${page}`;
+    if (type) url += `&product_type=${type}`;
+
+    fetch(url)
+    .then(r => r.json())
+    .then(result => {
+        const totalPages = Math.ceil(result.total / result.limit);
+
+        // Cập nhật thông tin trang
+        document.getElementById('news-page-info').textContent = `Trang ${page}/${totalPages}`;
+
+        // Ẩn/hiện nút
+        document.getElementById('news-prev').disabled = page <= 1;
+        document.getElementById('news-next').disabled = page >= totalPages;
+
+        // Render tin tức
+        renderNews(result.data);
+
+        // Load filter options lần đầu
+        if (page === 1 && !type) {
+            const types = [...new Set(result.data.map(r => r.product_type).filter(Boolean))];
+            const select = document.getElementById('news-type-filter');
+            if (select.options.length === 1) {
+                types.forEach(t => {
+                    const option = document.createElement('option');
+                    option.value = t;
+                    option.text = t;
+                    select.appendChild(option);
+                });
+            }
+        }
+    });
+}
+
+// Load lần đầu
+loadFullNews(1, '');
+
+// Nút Trước
+document.getElementById('news-prev').addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        loadFullNews(currentPage, currentType);
+    }
+});
+
+// Nút Tiếp
+document.getElementById('news-next').addEventListener('click', () => {
+    currentPage++;
+    loadFullNews(currentPage, currentType);
+});
+
+// Filter
+document.getElementById('news-filter-btn').addEventListener('click', () => {
+    currentType = document.getElementById('news-type-filter').value;
+    currentPage = 1;
+    loadFullNews(currentPage, currentType);
+});
+
+function renderNews(data) {
+    const newsList = document.getElementById('news-list');
+    newsList.innerHTML = '';
+    data.forEach(row => {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.innerHTML = `
+            <div class="news-card-header">
+                <span class="news-tag">${row.product_type || '-'}</span>
+                <span class="news-date">${row.date_published}</span>
+            </div>
+            <div class="news-title">${row.title}</div>
+            <div class="news-description">${row.description || ''}</div>
+        `;
+        newsList.appendChild(card);
+    });
+}
+
+// Filter button
+document.getElementById('news-filter-btn').addEventListener('click', () => {
+    const type = document.getElementById('news-type-filter').value;
+    const url = type 
+        ? `http://127.0.0.1:5000/api/fullnews?product_type=${type}`
+        : 'http://127.0.0.1:5000/api/fullnews';
+    
+    fetch(url)
+    .then(r => r.json())
+    .then(data => renderNews(data));
+});
+
 // Filter button
 document.getElementById('filter-btn').addEventListener('click', () => {
     const productId = document.getElementById('product-filter').value;
