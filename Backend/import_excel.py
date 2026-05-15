@@ -4,7 +4,7 @@ import sqlite3
 excel_file = 'Gia_xang_dau-final_update_ngay.xlsx'
 xl = pd.ExcelFile(excel_file)
 
-connection = sqlite3.connect('fuel.db')
+connection = sqlite3.connect(DB_PATH)
 
 # ==================== CALENDAR ====================
 df_calendar = pd.read_excel(excel_file, sheet_name='12.DateTime')

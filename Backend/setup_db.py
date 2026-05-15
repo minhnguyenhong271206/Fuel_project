@@ -1,7 +1,7 @@
 import sqlite3
 
 # Kết nối database
-connection = sqlite3.connect("fuel.db")
+connection = sqlite3.connect(DB_PATH)
 cursor = connection.cursor()
 
 cursor.execute("""
