@@ -2,7 +2,7 @@ import pandas as pd
 import sqlite3
 import os
 DB_PATH = os.path.join(os.path.dirname(__file__), 'fuel.db')
-excel_file = 'Gia_xang_dau-final_update_ngay.xlsx'
+excel_file = os.path.join(os.path.dirname(__file__), '..', 'Data', 'Gia_xang_dau-final_update_ngay.xlsx')
 xl = pd.ExcelFile(excel_file)
 
 connection = sqlite3.connect(DB_PATH)
@@ -141,6 +141,21 @@ if not df_economic.empty:
 else:
     print("EconomicIndicator: Không có dữ liệu mới để import.")
 
+# ==================== MARGIN ====================
+df_margin = pd.read_excel(excel_file, sheet_name='5.Margin')
+
+df_margin = df_margin[['Time', 'Dubai FCC', 'Dated Brent', 'Global composite margin']].rename(columns={
+    'Time'                    : 'date',
+    'Dubai FCC'               : 'dubai_fcc',
+    'Dated Brent'             : 'dated_brent',
+    'Global composite margin' : 'global_composite'
+})
+
+df_margin['date'] = pd.to_datetime(df_margin['date']).dt.date
+df_margin = df_margin.dropna(subset=['date'])
+
+df_margin.to_sql('Margin', connection, if_exists='append', index=False)
+print(f"✅ Đã import {len(df_margin)} dòng vào bảng Margin!")
 
 connection.commit()
 connection.close()

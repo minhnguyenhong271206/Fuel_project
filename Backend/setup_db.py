@@ -1,5 +1,7 @@
 import sqlite3
+import os
 
+DB_PATH = os.path.join(os.path.dirname(__file__), 'fuel.db')
 # Kết nối database
 connection = sqlite3.connect(DB_PATH)
 cursor = connection.cursor()
@@ -16,7 +18,7 @@ cursor.execute("""
 """)
 
 cursor.execute(""" 
-    CREATE TABLE IF NOT EXIST Product (
+    CREATE TABLE IF NOT EXISTS Product (
         id INTEGER PRIMARY KEY,
         name VARCHAR,
         category VARCHAR
@@ -55,6 +57,16 @@ cursor.execute("""
         category VARCHAR,
         date DATE,
         FOREIGN KEY (date) REFERENCES Calendar(date)
+    )
+""")
+
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Margin (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date DATE,
+        dubai_fcc REAL,
+        dated_brent REAL,
+        global_composite REAL
     )
 """)
 

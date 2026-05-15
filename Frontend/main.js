@@ -85,6 +85,63 @@ fetch('http://127.0.0.1:5000/api/economic')
     });
 });
 
+// Load Margin data
+fetch('http://127.0.0.1:5000/api/margin')
+.then(r => r.json())
+.then(data => {
+    // Cards - lấy dòng mới nhất
+    const latest = data[data.length - 1];
+    document.getElementById('dubai-latest').textContent = parseFloat(latest.dubai_fcc).toFixed(2);
+    document.getElementById('brent-latest').textContent = parseFloat(latest.dated_brent).toFixed(2);
+    document.getElementById('global-latest').textContent = parseFloat(latest.global_composite).toFixed(2);
+
+    // Bảng
+    const tbody = document.getElementById('margin-body');
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row.date}</td>
+            <td>${parseFloat(row.dubai_fcc).toFixed(2)}</td>
+            <td>${parseFloat(row.dated_brent).toFixed(2)}</td>
+            <td>${parseFloat(row.global_composite).toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // Chart
+    const labels = data.map(r => r.date);
+    const ctx = document.getElementById('margin-chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Dubai FCC',
+                    data: data.map(r => r.dubai_fcc),
+                    borderColor: '#2d6b5e',
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'Dated Brent',
+                    data: data.map(r => r.dated_brent),
+                    borderColor: '#c8a400',
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'Global Composite',
+                    data: data.map(r => r.global_composite),
+                    borderColor: '#e05c2a',
+                    tension: 0.3,
+                    fill: false
+                }
+            ]
+        }
+    });
+});
+
 // Filter button
 document.getElementById('filter-btn').addEventListener('click', () => {
     const productId = document.getElementById('product-filter').value;

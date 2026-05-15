@@ -125,5 +125,19 @@ def get_product():
         mimetype='application/json'
     )
 
+@app.route('/api/margin')
+def get_margin():
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM Margin LIMIT 100")
+    data = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    data = [dict(zip(columns, row)) for row in data]
+    connection.close()
+    return Response(
+        json.dumps(data, ensure_ascii=False),
+        mimetype='application/json'
+    )
+
 if __name__ == '__main__':
     app.run(debug=True)

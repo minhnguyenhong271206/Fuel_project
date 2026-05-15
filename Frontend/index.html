@@ -15,6 +15,7 @@
         <li><a href="#price">Giá</a></li>
         <li><a href="#news">Tin Tức</a></li>
         <li><a href="#report">Báo cáo</a></li>
+        <li><a href="#margin">Margin</a></li>
     </ul>
 </nav>
 
@@ -48,6 +49,42 @@
 
         <canvas id="price-chart"></canvas>
     </div>
+</section>
+
+<section id="margin">
+    <h2>Margin Dashboard</h2>
+
+    <!-- Cards tóm tắt -->
+    <div id="margin-cards">
+        <div class="card">
+            <div class="card-title">Dubai FCC</div>
+            <div class="card-value" id="dubai-latest">-</div>
+        </div>
+        <div class="card">
+            <div class="card-title">Dated Brent</div>
+            <div class="card-value" id="brent-latest">-</div>
+        </div>
+        <div class="card">
+            <div class="card-title">Global Composite</div>
+            <div class="card-value" id="global-latest">-</div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <canvas id="margin-chart"></canvas>
+
+    <!-- Bảng -->
+    <table id="margin-table">
+        <thead>
+            <tr>
+                <th>Tháng</th>
+                <th>Dubai FCC</th>
+                <th>Dated Brent</th>
+                <th>Global Composite</th>
+            </tr>
+        </thead>
+        <tbody id="margin-body"></tbody>
+    </table>
 </section>
 
     <section id="news">
