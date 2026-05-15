@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Fuel Market Dashboard</title>
 </head>
 <body>
@@ -20,18 +21,33 @@
 <main>
     <section id="price" class="active">
     <h2>Giá nhiên liệu</h2>
-    <table id="price-table">
-        <thead>
-            <tr>
-                <th>Sản phẩm</th>
-                <th>Ngày</th>
-                <th>Giá</th>
-                <th>Đơn vị</th>
-            </tr>
-        </thead>
-        <tbody id="price-body">
-        </tbody>
-    </table>
+
+    <!-- Filter -->
+    <div id="filter-bar">
+        <select id="product-filter"></select>
+        <select id="days-filter">
+            <option value="30">30 ngày</option>
+            <option value="60">60 ngày</option>
+            <option value="90">90 ngày</option>
+        </select>
+        <button id="filter-btn">Lọc</button>
+    </div>
+
+    <!-- Layout 2 cột -->
+    <div id="price-layout">
+        <table id="price-table">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Giá</th>
+                    <th>Đơn vị</th>
+                </tr>
+            </thead>
+            <tbody id="price-body"></tbody>
+        </table>
+
+        <canvas id="price-chart"></canvas>
+    </div>
 </section>
 
     <section id="news">

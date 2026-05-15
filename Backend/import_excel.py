@@ -1,6 +1,7 @@
 import pandas as pd
 import sqlite3
-
+import os
+DB_PATH = os.path.join(os.path.dirname(__file__), 'fuel.db')
 excel_file = 'Gia_xang_dau-final_update_ngay.xlsx'
 xl = pd.ExcelFile(excel_file)
 

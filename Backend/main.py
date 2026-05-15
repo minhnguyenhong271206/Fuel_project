@@ -12,7 +12,7 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'fuel.db')
 @app.route('/api/price')
 def get_price():
     product_id = request.args.get('product_id')
-    days = request.args.get('days')  # ← thêm dòng này
+    days = request.args.get('days')
 
     connection = sqlite3.connect(DB_PATH)
     cursor = connection.cursor()
